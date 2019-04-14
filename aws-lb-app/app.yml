@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: books.example.com
+  labels:
+    app: books-api
+spec:
+  containers:
+  - name: books-api
+    image: marceloserpa/bookstore-books-api:v1.0.0
+    imagePullPolicy: "Always"
+    ports:
+    - name: nodejs-port
+      containerPort: 8080
