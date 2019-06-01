@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata: 
+  name: hello-app.example.com
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: helloworld
+    spec:
+      containers:
+      - name: hello-deployment-app
+        image: marceloserpa/hello-deployment-app:v0.1.0
+        imagePullPolicy: "Always"
+        ports:
+        - name: nodejs-port
+          containerPort: 9000
+      nodeSelector: 
+        hardware: high-spec
