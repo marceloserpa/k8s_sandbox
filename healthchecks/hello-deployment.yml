@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: hello-deployment
+  labels:
+    app: hello
+spec:
+  replicas: 3
+  selector:
+    matchLabels: 
+      app: hello
+  template:
+    metadata:
+      labels:
+        app: hello
+    spec:
+      containers:
+      - name: dockerhub-hello
+        image: marceloserpa/hello-deployment-app:v1.0.1
+        imagePullPolicy: "Always"
+        ports:
+        - name: nodejs-port
+          containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: nodejs-port
+          initialDelaySeconds: 15
+          timeoutSeconds: 30
