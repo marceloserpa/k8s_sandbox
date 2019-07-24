@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: hello-deployment-secrets
+  labels:
+    app: hello
+spec:
+  replicas: 3
+  selector:
+    matchLabels: 
+      app: hello
+  template:
+    metadata:
+      labels:
+        app: hello
+    spec:
+      containers:
+      - name: dockerhub-hello
+        image: marceloserpa/hello-deployment-app:v1.0.1
+        imagePullPolicy: "Always"
+        ports:
+        - name: nodejs-port
+          containerPort: 8080
+        volumeMounts:
+        - name: cred-volume
+          mountPath: /etc/creds
+          readOnly: true
+      volumes:
+      - name: cred-volume
+        secret:
+          secretName: db-secrets
+          
