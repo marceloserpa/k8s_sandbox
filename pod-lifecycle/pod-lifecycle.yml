@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: pod-lifecycle
+  labels:
+    app: hello
+spec:
+  replicas: 1
+  selector:
+    matchLabels: 
+      app: hello
+  template:
+    metadata:
+      labels:
+        app: hello
+    spec:
+      initContainers:
+      - name: init
+        image: busybox
+        command: ['sh', '-c', 'sleep 10']
+      containers:
+      - name: lifecycle-container
+        image: busybox
+        command: ['sh', '-c', 'echo $(date +%s): Running >> /timing && echo "The app is running!" && /bin/sleep 120']
+        readinessProbe:
+          exec: 
+            command: ['sh', '-c', 'echo $(date +%s): ReadinessProbe >> /timing']
+          initialDelaySeconds: 35
+        livenessProbe:
+          exec: 
+            command: ['sh', '-c', 'echo $(date +%s): LivenessProbe >> /timing']
+          initialDelaySeconds: 35                  
+          timeoutSeconds: 30
+        lifecycle:
+          postStart:
+            exec:
+              command: ['sh', '-c', 'echo $(date +%s): PostStart >> /timing && sleep 10 && echo $(date +%s): end PostStart >> /timing']
+          preStop:
+            exec:
+              command: ['sh', '-c', 'echo $(date +%s): PreStop >> /timing && sleep 10']        
+
