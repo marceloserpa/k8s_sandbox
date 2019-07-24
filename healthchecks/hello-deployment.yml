@@ -27,3 +27,9 @@ spec:
             port: nodejs-port
           initialDelaySeconds: 15
           timeoutSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: nodejs-port
+          initialDelaySeconds: 15
+          timeoutSeconds: 30          
