@@ -1,0 +1,35 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: node-affinity
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: node-affinity
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: env
+                operator: In
+                values:
+                - dev
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            preference:
+              matchExpressions:
+              - key: team
+                operator: In
+                values:
+                - eng-poc
+      containers:
+      - name: dockerhub-hello
+        image: marceloserpa/dockerhub-hello:v1.0.0
+        imagePullPolicy: "Always"
+        ports:
+        - name: nodejs-port
+          containerPort: 8080        
