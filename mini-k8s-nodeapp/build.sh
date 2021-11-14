@@ -2,7 +2,7 @@
 
 REPO=marceloserpa
 APP_NAME=leaderboard-poc
-VERSION=v0.0.1-SNAPSHOT
+VERSION=v0.0.2-SNAPSHOT
 
 IMG=$REPO/$APP_NAME:$VERSION
 
