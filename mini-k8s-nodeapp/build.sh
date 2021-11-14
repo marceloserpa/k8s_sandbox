@@ -1,5 +1,12 @@
 #!/bin/bash
 
-docker build -t marceloserpa/hello-node-app:v0.0.2 .
+REPO=marceloserpa
+APP_NAME=leaderboard-poc
+VERSION=v0.0.1-SNAPSHOT
 
-docker push marceloserpa/hello-node-app:v0.0.2
+IMG=$REPO/$APP_NAME:$VERSION
+
+echo "Creating image: $IMG"
+docker build -t $IMG .
+
+docker push $IMG
