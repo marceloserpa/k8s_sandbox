@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: leaderboard-poc.com
+  labels:
+    app: leaderboard-poc
+spec:
+  containers:
+  - name: leaderboard-poc
+    image: marceloserpa/leaderboard-poc:v0.0.1-SNAPSHOT
+    imagePullPolicy: "Always"
+    ports:
+    - name: nodejs-port
+      containerPort: 3000
