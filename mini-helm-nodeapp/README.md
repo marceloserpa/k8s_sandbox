@@ -3,11 +3,16 @@
 Initialize the Redis container
 
 ```
+cd docker/
 docker-compose up -d
 ```
 
-Edit the local IP address in the kubefiles/redis-external-endpoint.yaml, to find this IP you can run the command ifconfig and try to find it "wlo1".
+Edit the local IP address (redisExternalService.ipAddress) in the leaderboard-charts/values.yaml.
+If you don't known which is this IP, you can run the command ifconfig and search for a network with name "wlo1".
 
 
+To install this helm you just need to run it:
 
-WIP
+```
+helm install leaderboard-app leaderboard-charts
+```
