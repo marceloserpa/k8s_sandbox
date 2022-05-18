@@ -1,0 +1,22 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-spring-consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-spring-consumer
+  template:
+    metadata:
+      labels:
+        app: kafka-spring-consumer
+    spec:
+      containers:
+        - env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: localhost:9092
+          name: kafka-spring-consumer
+          image: docker.io/marceloserpa/foo-app
+          imagePullPolicy: IfNotPresent
