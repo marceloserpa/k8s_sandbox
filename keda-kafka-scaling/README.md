@@ -1,0 +1,1 @@
+docker exec --interactive --tty broker kafka-console-producer --bootstrap-server localhost:9092 --topic marcelo-topic
