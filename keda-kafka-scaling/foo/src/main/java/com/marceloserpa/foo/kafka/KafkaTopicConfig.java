@@ -24,7 +24,10 @@ public class KafkaTopicConfig {
 
     @Bean
     public NewTopic topic1() {
-        return new NewTopic("marcelo-topic", 1, (short) 1);
+        String topic = System.getenv("POC_TOPIC");
+        int numberOfPartitions = Integer.valueOf(System.getenv("POC_TOPIC_PARTITIONS"));
+
+        return new NewTopic(topic, numberOfPartitions, (short) 1);
     }
 
 }
