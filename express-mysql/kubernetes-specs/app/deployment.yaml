@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: express-poc-deployment
+  labels:
+    app: express-poc
+spec:
+  replicas: 1
+  selector:
+    matchLabels: 
+      app: express-poc
+  template:
+    metadata:
+      labels:
+        app: express-poc
+    spec:
+      containers:
+      - name: express-mysql-poc
+        image: express-mysql-poc:latest
+        imagePullPolicy: "Never"
+        ports:
+        - name: nodejs-port
+          containerPort: 3000
