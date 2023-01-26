@@ -1,0 +1,21 @@
+apiVersion: keda.sh/v1alpha1    
+kind: ScaledObject
+metadata:
+  name: kafka-scaledobject
+  namespace: default
+spec:
+  scaleTargetRef:
+    name: kafka-spring-consumer
+  pollingInterval: 30
+  cooldownPeriod:  15  
+  minReplicaCount: 1             
+  maxReplicaCount: 10 
+
+  triggers:
+  - type: kafka
+    metadata:
+      bootstrapServers: my-cluster-kafka-bootstrap.kafka.svc:9092
+      consumerGroup: group       # Make sure that this consumer group name is the same one as the one that is consuming topics
+      topic: keda_poc_2
+      # Optional
+      lagThreshold: "5"

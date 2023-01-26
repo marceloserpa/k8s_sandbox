@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-spring-consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-spring-consumer
+  template:
+    metadata:
+      labels:
+        app: kafka-spring-consumer
+    spec:
+      containers:
+        - env:
+            - name: BOOTSTRAP_SERVERS_CONFIG
+              value: my-cluster-kafka-bootstrap.kafka.svc:9092
+            - name: POC_TOPIC
+              value: keda_poc_2
+            - name: POC_TOPIC_PARTITIONS
+              value: "10"
+          name: kafka-spring-consumer
+          image: docker.io/marceloserpa/foo-app:v5
+          imagePullPolicy: IfNotPresent
+

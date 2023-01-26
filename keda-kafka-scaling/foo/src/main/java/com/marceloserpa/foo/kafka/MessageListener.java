@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class MessageListener {
 
 
-    @KafkaListener(topics = "marcelo-topic")
+    @KafkaListener(topics = "#{systemEnvironment['POC_TOPIC']}")
     public void listen(ConsumerRecord<?, ?> consumerRecord,
                        Acknowledgment acknowledgment) throws InterruptedException {
 

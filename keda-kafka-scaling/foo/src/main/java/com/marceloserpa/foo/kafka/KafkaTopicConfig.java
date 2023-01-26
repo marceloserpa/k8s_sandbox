@@ -14,19 +14,20 @@ import java.util.Map;
 @Configuration
 public class KafkaTopicConfig {
 
-    @Value(value = "localhost:9092")
-    private String bootstrapAddress;
-
     @Bean
     public KafkaAdmin kafkaAdmin() {
+        String bootstrapServer = System.getenv("BOOTSTRAP_SERVERS_CONFIG");
         Map<String, Object> configs = new HashMap<>();
-        configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
+        configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
         return new KafkaAdmin(configs);
     }
 
     @Bean
     public NewTopic topic1() {
-        return new NewTopic("marcelo-topic", 1, (short) 1);
+        String topic = System.getenv("POC_TOPIC");
+        int numberOfPartitions = Integer.valueOf(System.getenv("POC_TOPIC_PARTITIONS"));
+
+        return new NewTopic(topic, numberOfPartitions, (short) 1);
     }
 
 }
