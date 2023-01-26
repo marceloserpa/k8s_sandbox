@@ -1,0 +1,1 @@
+kubectl exec --stdin --tty mysql-6f9bcdb469-h4nd2 -- /bin/bash
