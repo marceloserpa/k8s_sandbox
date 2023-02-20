@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: express-poc
+spec:
+  ports:
+  - port: 3000
+  selector:
+    app: express-poc
+  type: NodePort
