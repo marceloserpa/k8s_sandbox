@@ -1,0 +1,1 @@
+kubectl score  deployment.yaml 
