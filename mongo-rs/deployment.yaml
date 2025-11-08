@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: mongo-database
+  name: mongo-database
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mongo-database
+  serviceName: mongo-service
+  template:
+    metadata:
+      labels:
+        app: mongo-database
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: mongo-database
+        image: mongo:6 
+        args: ["--dbpath","/data/db", "--bind_ip_all", "--replSet", "marcelo-rs"]
+        ports:
+        - containerPort: 27017
+        volumeMounts:
+        - name: "mongo-data-volume"
+          mountPath: "/data/db"
+        livenessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - |-
+              status=$(mongosh --quiet --eval "db.adminCommand('ping').ok")
+
+              replicaset_status=$( mongosh --quiet --host mongo-database-0.mongo-service:27017 --eval 'rs.status().ok' )
+                          
+              if [ $replicaset_status -eq 1 ]; then
+                echo "ReplicaSet is already configured"
+              else
+                echo "Trying to iniatilize the Mongo ReplicaSet"
+                mongosh --quiet --host mongo-database-0.mongo-service:27017 --eval 'rs.initiate({_id:"marcelo-rs",members:[{_id:0,host:"mongo-database-0.mongo-service:27017"},{_id:1,host:"mongo-database-1.mongo-service:27017"}]}).ok'                
+              fi
+
+              if [ $status -eq 1 ]; then
+                echo "Mongo is runnning"
+                exit 0
+              else
+                echo "Mongo is not running"
+                exit 1
+              fi
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          failureThreshold: 3
+          timeoutSeconds: 10
+
+  volumeClaimTemplates:  
+  - metadata: 
+      name: mongo-data-volume
+    spec:
+      storageClassName: standard
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi      

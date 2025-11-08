@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: statefulset-test-1
+spec:
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx-poc
+        image: nginx:latest
+---
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: app-budget
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: not-nginx
