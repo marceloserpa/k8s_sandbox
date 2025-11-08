@@ -1,0 +1,1 @@
+kubectl config set-context $(kubectl config current-context) --namespace=my-app-dev
