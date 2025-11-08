@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: hello-rs
+  labels:
+    app: hello
+
+spec:
+  template:
+    metadata:
+      name: mypod
+      labels: 
+        app: hello
+    spec:
+      containers:
+        - name: hello
+          image: nginx
+  replicas: 5
+  selector:
+    matchLabels:
+      app: hello
