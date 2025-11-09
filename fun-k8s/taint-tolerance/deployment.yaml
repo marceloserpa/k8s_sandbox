@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-deployment
+  labels:
+    app: hello
+
+spec:
+  template:
+    metadata:
+      name: mypod
+      labels: 
+        app: hello
+    spec:
+      containers:
+        - name: hello
+          image: nginx:1.19
+
+      tolerations:
+      - key: "profile"
+        operator: "Equal"
+        value: "ai"
+        effect: "NoExecute"
+
+  replicas: 5
+  selector:
+    matchLabels:
+      app: hello
