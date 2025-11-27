@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+  labels: 
+    app: hello
+spec:
+  containers:
+  - name: hello
+    image: alpine:3.14
+    command: ["/bin/sh", "-c", "while true; do echo $(date) >> /opt/date.txt; sleep 1; done"]
+    volumeMounts:
+    - name: hello-volume
+      mountPath: /opt
+
+  volumes:
+  - name: hello-volume
+    hostPath:
+      path: /data
+      type: Directory
