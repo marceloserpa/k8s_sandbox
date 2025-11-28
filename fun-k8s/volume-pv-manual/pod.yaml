@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+  labels: 
+    app: hello
+spec:
+  containers:
+  - name: hello
+    image: alpine:3.14
+    command: ["/bin/sh", "-c", "while true; do echo $(date) >> /opt/date.txt; sleep 1; done"]
+    volumeMounts:
+    - name: pv0001
+      mountPath: /opt
+
+  volumes:
+    - name: pv0001
+      persistentVolumeClaim:
+        claimName: pv-claim
