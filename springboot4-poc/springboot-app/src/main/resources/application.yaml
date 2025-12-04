@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: springboot4k8s
+
+server:
+  port: 9000
