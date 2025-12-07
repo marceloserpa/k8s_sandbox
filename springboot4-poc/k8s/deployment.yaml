@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springpoc-deployment
+  labels:
+    app: springboot4-poc
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: springboot4-poc
+  template:
+    metadata:
+      labels:
+        app: springboot4-poc
+    spec:
+      containers:
+      - name: springboot4-poc
+        image: springboot4-poc:0.0.1
+        ports:
+        - containerPort: 9000
