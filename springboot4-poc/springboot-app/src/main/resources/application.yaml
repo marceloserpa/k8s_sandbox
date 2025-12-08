@@ -2,7 +2,7 @@ spring:
   application:
     name: springboot4k8s
   datasource:
-    url: jdbc:postgresql://172.18.0.2:5442/books
+    url: jdbc:postgresql://host.minikube.internal:5442/spring_poc
     username: marceloserpa
     password: 123456
   jpa:

@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/people")
 public class PersonController {
 
     private final PersonRepository repository;
@@ -14,7 +13,7 @@ public class PersonController {
         this.repository = repository;
     }
 
-    @GetMapping
+    @GetMapping("/people")
     public List<Person> findAll() {
         return repository.findAll();
     }

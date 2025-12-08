@@ -8,7 +8,7 @@ services:
     environment:
       POSTGRES_USER: marceloserpa
       POSTGRES_PASSWORD: 123456
-      POSTGRES_DB: books
+      POSTGRES_DB: spring_poc
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:

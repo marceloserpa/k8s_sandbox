@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: springboot4-poc-configmap
+data:
+  SPRING_DATASOURCE_URL: jdbc:postgresql://host.minikube.internal:5442/spring_poc
+  SPRING_DATASOURCE_USERNAME: marceloserpa

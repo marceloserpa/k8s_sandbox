@@ -5,7 +5,7 @@ metadata:
   labels:
     app: springboot4-poc
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: springboot4-poc
@@ -16,6 +16,9 @@ spec:
     spec:
       containers:
       - name: springboot4-poc
-        image: springboot4-poc:0.0.1
+        image: springboot4-poc:0.0.3
         ports:
         - containerPort: 9000
+        envFrom:
+        - configMapRef:
+            name: springboot4-poc-configmap
