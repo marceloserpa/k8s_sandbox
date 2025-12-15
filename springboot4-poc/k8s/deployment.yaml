@@ -22,3 +22,5 @@ spec:
         envFrom:
         - configMapRef:
             name: springboot4-poc-configmap
+        - secretRef:
+            name: test-db-secret
